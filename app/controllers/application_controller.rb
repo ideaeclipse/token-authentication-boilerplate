@@ -1,35 +1,34 @@
 # TODO: status documentation
-# Example of how to create user User.create!(username: "admin", password: Digest::SHA256.hexdigest("admin"), is_admin: true)
 class ApplicationController < ActionController::API
   before_action :auth_user
 
   # gets user object if the user is authorized
   def auth_user
     unless request.headers['Authorization'].present?
-      return render json: {status: "Missing auth token"}
+      return render json: {status: "Missing auth token"}, status: 400
     end
     token = JsonWebToken.get_token(request.headers)
     decoded ||= JsonWebToken.decode(token)
     if decoded.nil?
-      render json: {status: "Invalid token"}
+      render json: {status: "Invalid token"}, status: 401
     else
       user = User.find_by_id(decoded[:user_id])
       if user.nil?
-        render json: {status: "Unauthorized"}
+        render json: {status: "Unauthorized"}, status: 401
       else
         if user.token == token
           @user = user
         else
-          render json: {status: "Please call /login again, your token has expired"}
+          render json: {status: "Please call /login again, your token has expired"}, status: 400
         end
       end
     end
   end
 
   #gets whether or not the user is an admin user
-  def is_admin?
+  def auth_admin
     unless @user.is_admin
-      render json: {status: "Unauthorized"}
+      render json: {status: "Unauthorized"}, status: 401
     end
   end
 end
