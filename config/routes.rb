@@ -3,4 +3,5 @@ Rails.application.routes.draw do
   post "login", to: "user#auth"
   get "test", to: "user#test"
   get "admin", to: "user#admin"
+  post "createuser", to: "user#create_user"
 end

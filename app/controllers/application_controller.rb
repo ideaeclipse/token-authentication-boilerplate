@@ -1,4 +1,5 @@
 # TODO: status documentation
+# Example of how to create user User.create!(username: "admin", password: Digest::SHA256.hexdigest("admin"), is_admin: true)
 class ApplicationController < ActionController::API
   before_action :auth_user
 

@@ -3,11 +3,11 @@
 one:
   username: MyString
   password: MyString
-  is_admin: MyString
+  is_admin: false
   token: MyString
 
 two:
   username: MyString
   password: MyString
-  is_admin: MyString
+  is_admin: false
   token: MyString
