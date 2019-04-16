@@ -24,6 +24,16 @@ User.create!(username: "$USERNAME", password: Digest::SHA256.hexdigest("$PASSWOR
 * Substitute USERNAME and PASSWORD for values of your choice
 * Setting is_admin to true makes the newly created user an admin or vice versa
 
+## Authenticating Users
+* There are two built in methods that allow you to authenticate a user before endpoint execution with either admin level privileges or user level privileges
+* if you call auth_user before your endpoint both admin and regular users will have access
+* if you call auth_admin before your endpoint only admin users will have access
+    * Response Errors
+        * Returns a status code of 400 if you are missing the auth token in your header
+        * Returns a status code of 401 if any part of the authentication process didn't work
+    * Success
+        * Executes endpoint, see that endpoints description for errors
+
 ## Endpoints
 
 * POST /login
@@ -69,13 +79,3 @@ User.create!(username: "$USERNAME", password: Digest::SHA256.hexdigest("$PASSWOR
     * User must pass a valid Admin Authorization token in request header
     * If valid will return a json string saying Authorized
     * Else will return a json string saying unauthorized
-    
-## Authenticating Users
-* There are two built in methods that allow you to authenticate a user before endpoint execution with either admin level privileges or user level privileges
-* if you call auth_user before your endpoint both admin and regular users will have access
-* if you call auth_admin before your endpoint only admin users will have access
-    * Response Errors
-        * Returns a status code of 400 if you are missing the auth token in your header
-        * Returns a status code of 401 if any part of the authentication process didn't work
-    * Success
-        * Executes endpoint, see that endpoints description for errors
