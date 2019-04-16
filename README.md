@@ -71,7 +71,7 @@ User.create!(username: "$USERNAME", password: Digest::SHA256.hexdigest("$PASSWOR
     * Else will return a json string saying unauthorized
     
 ## Authenticating Users
-* There are two built in methods that all you to authenticate a user before endpoint execution with either admin level privileges or user level privileges
+* There are two built in methods that allow you to authenticate a user before endpoint execution with either admin level privileges or user level privileges
 * if you call auth_user before your endpoint both admin and regular users will have access
 * if you call auth_admin before your endpoint only admin users will have access
     * Response Errors
