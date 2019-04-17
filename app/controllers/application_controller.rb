@@ -1,4 +1,3 @@
-# TODO: status documentation
 class ApplicationController < ActionController::API
   before_action :auth_user
 

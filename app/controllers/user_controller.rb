@@ -1,8 +1,7 @@
-require 'digest'
 # TODO: secret in production doesn't exist
 class UserController < ApplicationController
   before_action :auth_admin, only: [:admin_test, :create_user]
-  before_action :validate_login_params, only: [:login, :admin_test]
+  before_action :validate_login_params, only: [:login]
   skip_before_action :auth_user, only: :login
 
 
