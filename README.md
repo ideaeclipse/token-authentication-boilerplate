@@ -54,8 +54,15 @@ User.create!(username: "$USERNAME", password: Digest::SHA256.hexdigest("$PASSWOR
               "token": "**token**"
             }
             ```
-  
- * POST /createuser
+
+* GET /user
+    * User must pass a valid Admin Authorization token in request header
+    * Errors
+        * Handled by authentication
+    * Success
+        * Returns a json array of json strings containing users id, username and is_admin boolean
+
+* POST /user
     * User must pass a valid Admin Authorization token in request header
     * Params: json string with keys username and password
         ```json
@@ -69,6 +76,13 @@ User.create!(username: "$USERNAME", password: Digest::SHA256.hexdigest("$PASSWOR
         * Returns a status code of 401 if the username you passed is already a registered user
     * Success
         * Returns a status code of 200 a json string saying the user has been created, if you want an authentication token you must call /login
+
+* DELETE /user/:id
+    * User must pass a valid Admin Authorization token in request header
+    * Errors
+        * Returns a status code of 400 if the user couldn't be deleted due to the id doesn't exist
+    * Success
+        * Json string saying user was deleted
 
 * GET /auth_test
     * User must pass a valid Admin/User Authorization token in request header
