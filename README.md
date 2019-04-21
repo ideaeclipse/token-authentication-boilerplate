@@ -112,6 +112,8 @@ User.create!(username: "$USERNAME", password: Digest::SHA256.hexdigest("$PASSWOR
 
 ## Endpoints
 
+
+### Users/Authentication endpoints
 * POST /login
     * Params: json string with keys username and password
         ```json
@@ -169,3 +171,4 @@ User.create!(username: "$USERNAME", password: Digest::SHA256.hexdigest("$PASSWOR
     * User must pass a valid Admin Authorization token in request header
     * If valid will return a json string saying Authorized
     * Else will return a json string saying unauthorized
+
