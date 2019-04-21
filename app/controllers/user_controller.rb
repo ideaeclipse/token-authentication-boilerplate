@@ -11,7 +11,7 @@ class UserController < ApplicationController
   def login
     user = User.find_by_username(params[:username])
     if user and user.password == Digest::SHA256.hexdigest(params[:password])
-      user.token = JsonWebToken.encode(user_id: user.id, username: params[:username], user_password: params[:password], nonce: Random.rand(0..1000))
+      user.token = JsonWebToken.encode(time: Time.now.strftime("%d/%m/%Y %H:%M"), user_id: user.id, username: params[:username], user_password: params[:password], nonce: Random.rand(0..1000))
       user.save
       render json: {token: user.token}
     else
@@ -25,7 +25,7 @@ class UserController < ApplicationController
   def index
     value = []
     User.all.each do |user|
-      value << {id: user.id, username: user.username, admin: user.is_admin}
+      value << {id: user.id, username: user.username, is_admin: user.is_admin}
     end
     render json: value
   end
@@ -36,8 +36,7 @@ class UserController < ApplicationController
   def create
     temp = User.find_by_username(params[:username])
     if temp.nil?
-      user = User.new(username: params[:username], password: Digest::SHA256.hexdigest(params[:password]), is_admin: false)
-      user.save
+      User.create!({username: params[:username], password: Digest::SHA256.hexdigest(params[:password]), is_admin: false})
       render json: {status: "User Created"}
     else
       render json: {status: "That username is already taken please try another one"}, status: 400
